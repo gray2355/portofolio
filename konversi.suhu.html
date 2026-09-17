@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kalkulator Konversi Suhu</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen py-10 px-4">
+
+    <div class="max-w-md mx-auto">
+
+        <!-- Judul -->
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">
+                Kalkulator Konversi Suhu
+            </h1>
+
+            <p class="text-gray-500 mt-1">
+                Mengubah nilai suhu ke satuan lainnya.
+            </p>
+        </div>
+
+
+        <!-- Kalkulator -->
+        <div class="bg-white rounded-xl shadow p-6">
+
+            <!-- Input -->
+            <label class="block text-sm font-medium text-gray-700">
+                Masukkan Suhu
+            </label>
+
+            <input
+                type="number"
+                id="suhu"
+                placeholder="Contoh: 30"
+                class="w-full mt-2 border border-gray-300 rounded-lg p-2.5"
+            >
+
+
+            <!-- Pilihan Satuan -->
+            <div class="grid grid-cols-2 gap-4 mt-4">
+
+                <div>
+                    <label class="block text-sm text-gray-600">
+                        Dari
+                    </label>
+
+                    <select
+                        id="dari"
+                        class="w-full mt-2 border border-gray-300 rounded-lg p-2.5">
+
+                        <option value="c">Celsius</option>
+                        <option value="f">Fahrenheit</option>
+                        <option value="k">Kelvin</option>
+                        <option value="r">Reamur</option>
+
+                    </select>
+                </div>
+
+
+                <div>
+                    <label class="block text-sm text-gray-600">
+                        Ke
+                    </label>
+
+                    <select
+                        id="ke"
+                        class="w-full mt-2 border border-gray-300 rounded-lg p-2.5">
+
+                        <option value="f">Fahrenheit</option>
+                        <option value="c">Celsius</option>
+                        <option value="k">Kelvin</option>
+                        <option value="r">Reamur</option>
+
+                    </select>
+                </div>
+
+            </div>
+
+
+            <!-- Tombol -->
+            <div class="flex gap-3 mt-5">
+
+                <button
+                    onclick="konversi()"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+
+                    Konversi
+
+                </button>
+
+                <button
+                    onclick="resetForm()"
+                    class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+
+            <!-- Hasil -->
+            <div class="mt-6 border-t pt-5">
+
+                <p class="text-sm text-gray-500">
+                    Hasil
+                </p>
+
+                <h2
+                    id="hasil"
+                    class="text-2xl font-bold text-gray-800 mt-1">
+
+                    -
+
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- Footer -->
+        <p class="text-center text-xs text-gray-400 mt-5">
+            Kalkulator Konversi Suhu
+        </p>
+
+    </div>
+
+
+    <script>
+
+        function konversi() {
+
+            let suhu = parseFloat(
+                document.getElementById("suhu").value
+            );
+
+            let dari = document.getElementById("dari").value;
+            let ke = document.getElementById("ke").value;
+
+            if (isNaN(suhu)) {
+                document.getElementById("hasil").innerText =
+                    "Masukkan suhu terlebih dahulu";
+                return;
+            }
+
+
+            // Konversi ke Celsius terlebih dahulu
+            let celsius;
+
+            if (dari == "c") {
+                celsius = suhu;
+            }
+            else if (dari == "f") {
+                celsius = (suhu - 32) * 5 / 9;
+            }
+            else if (dari == "k") {
+                celsius = suhu - 273.15;
+            }
+            else {
+                celsius = suhu * 5 / 4;
+            }
+
+
+            // Konversi Celsius ke satuan tujuan
+            let hasil;
+
+            if (ke == "c") {
+                hasil = celsius;
+            }
+            else if (ke == "f") {
+                hasil = celsius * 9 / 5 + 32;
+            }
+            else if (ke == "k") {
+                hasil = celsius + 273.15;
+            }
+            else {
+                hasil = celsius * 4 / 5;
+            }
+
+
+            let satuan = {
+                c: "°C",
+                f: "°F",
+                k: "K",
+                r: "°R"
+            };
+
+
+            document.getElementById("hasil").innerText =
+                hasil.toFixed(2) + " " + satuan[ke];
+        }
+
+
+        function resetForm() {
+
+            document.getElementById("suhu").value = "";
+
+            document.getElementById("hasil").innerText = "-";
+        }
+
+    </script>
+
+</body>
+
+</html>
